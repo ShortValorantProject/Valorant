@@ -17,16 +17,14 @@ public class GameInputs : MonoBehaviour
         
     }
 
-    #region Input Actions Properties
-
+    #region Input Actions Properties 
     public Vector2 MoveVector => inputActions.Player.Move.ReadValue<Vector2>();
+    public Vector2 LookVector => inputActions.Player.Look.ReadValue<Vector2>();
 
     public bool AttackButtonPressed => inputActions.Player.Attack.WasPressedThisFrame();
 
     public bool InteractButtonPressed => inputActions.Player.Interact.WasPressedThisFrame();
 
-
-       
     #endregion
 
 
