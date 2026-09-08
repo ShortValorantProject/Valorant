@@ -275,6 +275,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 326793f22e5cc1048b10728e78678328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentBinder
+  activeAgent: {fileID: 0}
+  activeAgentHUD: {fileID: 0}
+  firstSpell: {fileID: 0}
+  secondSpell: {fileID: 0}
+  thirdSpell: {fileID: 0}
+  fourthSpell: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,6 +902,7 @@ GameObject:
   m_Component:
   - component: {fileID: 900061636}
   - component: {fileID: 900061637}
+  - component: {fileID: 900061638}
   m_Layer: 0
   m_Name: Cypher
   m_TagString: Untagged
@@ -916,6 +923,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1434409260}
   - {fileID: 1789457123}
   - {fileID: 599820792}
   m_Father: {fileID: 1413709501}
@@ -932,12 +940,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 783e5ef51cf21634e83014442e65616d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cypher
+  <velocity>k__BackingField: {x: 0, y: 0, z: 0}
   moveSpeed: 10
   rotationSpeed: 720
   agentCamera: {fileID: 1789457125}
   playerSensitivity: 0.3
-  rotationX: 0
-  rotationY: 0
+  cameraDamping: {x: 8, y: 8}
+  activeUtilOnHande: {fileID: 0}
+--- !u!114 &900061638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900061635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f67821aa68c8f4d9fa5c217d6ec375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tripwire
+  equipDuration: 2
+  unEquipDuration: 2
+  lifeTime: 0
 --- !u!1 &931117109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,6 +1598,56 @@ Transform:
   - {fileID: 900061636}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1434409259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1434409260}
+  - component: {fileID: 1434409261}
+  m_Layer: 0
+  m_Name: AgentBinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1434409260
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434409259}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.38073, y: 2.3901, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 900061636}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1434409261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434409259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326793f22e5cc1048b10728e78678328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentBinder
+  activeAgent: {fileID: 900061637}
+  activeAgentHUD: {fileID: 0}
+  firstSpell: {fileID: 900061638}
+  secondSpell: {fileID: 0}
+  thirdSpell: {fileID: 0}
+  fourthSpell: {fileID: 0}
 --- !u!1 &1449864175
 GameObject:
   m_ObjectHideFlags: 0

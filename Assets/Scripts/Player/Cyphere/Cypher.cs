@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public class Cypher : Agent
 {
+    public GameObject activeUtilOnHande;
     public void Start()
     {
         _Start();
