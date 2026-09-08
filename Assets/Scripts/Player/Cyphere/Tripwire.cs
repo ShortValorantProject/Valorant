@@ -12,9 +12,14 @@ public class Tripwire : Spell
         base.Destory();
     }
 
-    public override void _Update()
+    public override void OnCast()
     {
-        base._Update();
+        base.OnCast();
+    }
+
+    public override void OnSelect()
+    {
+        base.OnSelect();
     }
 
     public override void Equip()

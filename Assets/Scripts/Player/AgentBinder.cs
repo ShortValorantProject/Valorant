@@ -30,6 +30,7 @@ public class AgentBinder : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(SpellSellectionCycle(firstSpell));
+        activeAgentHUD.SelectFirstSpell();
         
     }
 
@@ -43,6 +44,8 @@ public class AgentBinder : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(SpellSellectionCycle(secondSpell));
+        activeAgentHUD.SelectSecondSpell();
+
     }
 
     private void ThirdSpell()
@@ -55,6 +58,8 @@ public class AgentBinder : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(SpellSellectionCycle(thirdSpell));
+        activeAgentHUD.SelectThirdSpell();
+
     }
 
     private void FourthSpell()
@@ -67,22 +72,24 @@ public class AgentBinder : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(SpellSellectionCycle(fourthSpell));
+        activeAgentHUD.SelectFourthSpell();
+
     }
 
     IEnumerator SpellSellectionCycle(Spell spell)
     {
 
-        if (lastSpell)
+        if (currentSpell)
         {
-            yield return new WaitForSeconds(lastSpell.unEquipDuration);
-            lastSpell.Unequip();
+            yield return new WaitForSeconds(currentSpell.unEquipDuration); // why am i unequiping the last spell 
+            currentSpell.Unequip();
         }
 
+        currentSpell = spell;
         yield return new WaitForSeconds(spell.equipDuration);
         spell.Equip();
         lastSpell = currentSpell;
-        currentSpell = spell;
-
+        selectedUtil += currentSpell.OnSelect;
     }
 
     void UseSpell()
@@ -91,7 +98,8 @@ public class AgentBinder : MonoBehaviour
         {
             currentSpell.TryCast(out var spellIsCasted);
             if(spellIsCasted)
-                selectedUtil += currentSpell._Update;
+                selectedUtil += currentSpell.OnCast;
+
         }
     }
 

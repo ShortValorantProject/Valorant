@@ -5,18 +5,27 @@ public abstract class Spell : MonoBehaviour
     public float equipDuration = 2f;
     public float unEquipDuration = 2f;
     public float lifeTime;
-    public virtual void TryCast(out bool isSpellCasted)
+    public bool isDestroyed {get; protected set;}
+
+    public virtual void TryCast(out bool spellIsCasted)
     {
-        Debug.Log("Spell casted");
-        isSpellCasted  = true;
+        if (isDestroyed)
+        {
+            Debug.Log("Cannot cast spell");
+            spellIsCasted  = false;
+        }else
+        {
+            Debug.Log("Spell casted");
+            spellIsCasted  = true;
+        }
     }
     
-    public virtual void Destory()
+    public virtual void OnCast()
     {
-        Debug.Log("Spell destroyed");
+        Debug.Log("Spell updated");
     }
 
-    public virtual void _Update()
+    public virtual void OnSelect()
     {
         Debug.Log("Spell updated");
     }
@@ -30,5 +39,12 @@ public abstract class Spell : MonoBehaviour
     {
         Debug.Log("Spell unequipped");
     }
+
+    public virtual void Destory()
+    {
+        isDestroyed = true;
+        Debug.Log("Spell destroyed");
+    }
+
 
 }
