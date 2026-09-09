@@ -7,17 +7,17 @@ public class AgentBinder : MonoBehaviour
 {
     [SerializeField] private Agent activeAgent;
     [SerializeField] private AgentHUD activeAgentHUD;
-    [SerializeField] private Spell firstSpell;
-    [SerializeField] private Spell secondSpell;
-    [SerializeField] private Spell thirdSpell;
-    [SerializeField] private Spell fourthSpell;
-    Action selectedUtil;
-    Spell currentSpell;
-    Spell lastSpell;
+    [SerializeField] private SpellCaster firstSpell;
+    [SerializeField] private SpellCaster secondSpell;
+    [SerializeField] private SpellCaster thirdSpell;
+    [SerializeField] private SpellCaster fourthSpell;
+    Action selectedUtilUpdatLogic;
+    SpellCaster currentSpell;
+    SpellCaster lastSpell;
 
     public void Update()
     {
-        selectedUtil?.Invoke();
+        selectedUtilUpdatLogic?.Invoke();
     }
 
     private void FirstSpell()
@@ -31,7 +31,6 @@ public class AgentBinder : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(SpellSellectionCycle(firstSpell));
         activeAgentHUD.SelectFirstSpell();
-        
     }
 
     private void SecondSpell()
@@ -45,7 +44,6 @@ public class AgentBinder : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(SpellSellectionCycle(secondSpell));
         activeAgentHUD.SelectSecondSpell();
-
     }
 
     private void ThirdSpell()
@@ -76,7 +74,7 @@ public class AgentBinder : MonoBehaviour
 
     }
 
-    IEnumerator SpellSellectionCycle(Spell spell)
+    IEnumerator SpellSellectionCycle(SpellCaster spell)
     {
 
         if (currentSpell)
@@ -89,17 +87,23 @@ public class AgentBinder : MonoBehaviour
         yield return new WaitForSeconds(spell.equipDuration);
         spell.Equip();
         lastSpell = currentSpell;
-        selectedUtil += currentSpell.OnSelect;
+        selectedUtilUpdatLogic = currentSpell.OnSelect;
     }
 
-    void UseSpell()
+    void TryCastSpell()
     {
         if (currentSpell)
         {
             currentSpell.TryCast(out var spellIsCasted);
-            if(spellIsCasted)
-                selectedUtil += currentSpell.OnCast;
-
+            if (spellIsCasted)
+            {
+                currentSpell.Unequip();
+                lastSpell = currentSpell;
+                currentSpell = null;
+                activeAgentHUD.UnSellectAll();
+                selectedUtilUpdatLogic = null;
+            }
+            
         }
     }
 
@@ -109,6 +113,6 @@ public class AgentBinder : MonoBehaviour
         GameInputs.Instance.inputActions.Player.SecondSpell.performed += ctx => SecondSpell();
         GameInputs.Instance.inputActions.Player.ThirdSpell.performed += ctx => ThirdSpell();
         GameInputs.Instance.inputActions.Player.FourthSpell.performed += ctx => FourthSpell();
-        GameInputs.Instance.inputActions.Player.Attack.performed += ctx => UseSpell();
+        GameInputs.Instance.inputActions.Player.Attack.performed += ctx => TryCastSpell();
     }
 }

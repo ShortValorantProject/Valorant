@@ -1,15 +1,20 @@
 using UnityEngine;
 
-public abstract class Spell : MonoBehaviour
+public abstract class SpellCaster : MonoBehaviour
 {
     public float equipDuration = 2f;
     public float unEquipDuration = 2f;
     public float lifeTime;
+    public int amoutInStore = 2;
+    public int amoutUsed;
+    public bool canCast;
+    
     public bool isDestroyed {get; protected set;}
 
     public virtual void TryCast(out bool spellIsCasted)
     {
-        if (isDestroyed)
+
+        if (isDestroyed == false || canCast == false)
         {
             Debug.Log("Cannot cast spell");
             spellIsCasted  = false;

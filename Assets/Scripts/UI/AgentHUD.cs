@@ -5,6 +5,7 @@ public class AgentHUD : MonoBehaviour
 {
     public Color sellectedSpellColor = Color.yellow;
     public Color spellNormalColor = Color.red;
+
     [SerializeField] Image firstSpell;
     [SerializeField] Image secondSpell;
     [SerializeField] Image thirdSpell;
@@ -24,19 +25,28 @@ public class AgentHUD : MonoBehaviour
     {
         OnSpellSeleted(firstSpell);
     }
+
     public void SelectSecondSpell()
     {
         OnSpellSeleted(secondSpell);
     }
+
     public void SelectThirdSpell()
     {
         OnSpellSeleted(thirdSpell);
     }
+
     public void SelectFourthSpell()
     {
         OnSpellSeleted(fourthSpell);
     }
-
+    public void UnSellectAll()
+    {
+        firstSpell.color = spellNormalColor;
+        secondSpell.color = spellNormalColor;
+        thirdSpell.color = spellNormalColor;
+        fourthSpell.color = spellNormalColor;
+    }
 
     private void OnSpellSeleted(Image spellUI)
     {

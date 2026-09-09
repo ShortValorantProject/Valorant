@@ -1,34 +1,32 @@
-public class Tripwire : Spell
+using UnityEngine;
+
+public class Tripwire : MonoBehaviour
 {
-    
+    public LayerMask tripwireLayerMask;
+    public Transform firstContactPoint;
+    public Transform secondContactPoint;
 
-    public override void TryCast(out bool isSpellCasted)
-    {
-        isSpellCasted = true;
-    }
-    
-    public override void Destory()
-    {
-        base.Destory();
-    }
+    public LineRenderer lineRenderer;
 
-    public override void OnCast()
+    public void Update()
     {
-        base.OnCast();
-    }
+        var distanceBetweenTrips = Vector3.Distance(secondContactPoint.position, firstContactPoint.position);
+        var direction = (secondContactPoint.position - firstContactPoint.position).normalized;
 
-    public override void OnSelect()
-    {
-        base.OnSelect();
+        Physics.Raycast(firstContactPoint.position, direction, out RaycastHit info, distanceBetweenTrips, tripwireLayerMask);
+        Debug.DrawRay(firstContactPoint.position, direction * distanceBetweenTrips, Color.red, .1f);
+
+
+        if(info.collider)
+            Destroy(info.collider.gameObject);
     }
 
-    public override void Equip()
+    public void SetupTripwire(Vector3 firstPos, Vector3 secondPos)
     {
-        base.Equip();
-    }   
-    
-    public override void Unequip()
-    {
-        base.Unequip();
+        firstContactPoint.position = firstPos;
+        secondContactPoint.position = secondPos;
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, firstContactPoint.position);
+        lineRenderer.SetPosition(1, secondContactPoint.position);
     }
 }
